@@ -1,3 +1,4 @@
+from openpyxl.descriptors import Float
 from dotenv import load_dotenv
 import sys
 
@@ -6,11 +7,6 @@ sys.stdout.reconfigure(encoding="utf-8")
 load_dotenv()
 from langchain_mistralai import ChatMistralAI
 from langchain_core.prompts import ChatPromptTemplate
-from pydantic import BaseModel
-from typing import Optional,List
-
-class Movie(BaseModel):
-    
 
 
 model = ChatMistralAI(model="mistral-small-2506")
