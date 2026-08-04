@@ -1,3 +1,10 @@
 python-dotenv
-langchain-mistralai
 streamlit
+langchain
+langchain-community
+langchain-mistralai
+langchain-text-splitters
+chromadb
+pypdf             
+faiss-cpu         
+sentence-transformers 
