@@ -5,6 +5,7 @@ langchain-community
 langchain-mistralai
 langchain-text-splitters
 chromadb
-pypdf             
-faiss-cpu         
-sentence-transformers 
+pypdf
+faiss-cpu
+sentence-transformers
+tiktoken
