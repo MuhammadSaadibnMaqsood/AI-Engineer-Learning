@@ -24,3 +24,6 @@ Thumbs.db
 
 # Ignore book PDF
 book.pdf
+
+createdb.py
+DB.py
