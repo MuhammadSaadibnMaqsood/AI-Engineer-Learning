@@ -38,3 +38,21 @@ Question:
         ),
     ]
 )
+print("RAG SYSTEM CREATED")
+print("press 0 for exit")
+
+while True:
+    query = input("You : ")
+
+    if query == 0:
+        break
+
+    docs = retriever.invoke(query)
+
+    context = "\n\n".join([doc.page_content for doc in docs])
+
+    final_prompt = prompt.invoke({"context": context, "question": query})
+
+    response = model.invoke(final_prompt)
+
+    print(f"\n\n AI: {response.content}")
