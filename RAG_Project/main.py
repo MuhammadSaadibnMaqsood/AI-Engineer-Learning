@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 from langchain_mistralai import ChatMistralAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_mistralai import MistralAIEmbeddings
-from langchain_community import Chroma
+from langchain_chroma import Chroma
 
 load_dotenv()
 
@@ -44,10 +44,12 @@ print("press 0 for exit")
 while True:
     query = input("You : ")
 
-    if query == 0:
+    if query == "0":
         break
 
     docs = retriever.invoke(query)
+    
+    print(docs)
 
     context = "\n\n".join([doc.page_content for doc in docs])
 
@@ -56,3 +58,6 @@ while True:
     response = model.invoke(final_prompt)
 
     print(f"\n\n AI: {response.content}")
+
+
+#COMPLETE PROJECT
