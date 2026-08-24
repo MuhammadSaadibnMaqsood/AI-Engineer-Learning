@@ -16,7 +16,7 @@ tool = TavilySearch(
     topic="general",
 )
 
-response = tool.invoke({"query": "What happened at the last wimbledon"})
+response = tool.invoke({"query": "Latest new of AI in 2026"})
 
 content = [doc["content"] for doc in response["results"]]
 
