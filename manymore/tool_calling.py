@@ -7,6 +7,7 @@ from langchain_mistralai import ChatMistralAI
 from rich import print
 
 
+
 @tool
 def get_text_length(text: str) -> int:
     """Return a number of character in a given text"""
