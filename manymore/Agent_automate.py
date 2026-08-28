@@ -7,7 +7,8 @@ from langchain_core.messages import HumanMessage, ToolMessage
 from langchain_core.tools import tool
 from langchain_mistralai import ChatMistralAI
 from tavily import TavilyClient
-
+from langchain.agents import create_agent
+from rich import print
 API_KEY = os.getenv("OPENWEATHER_API_KEY")
 
 
@@ -53,44 +54,17 @@ def get_news(city: str) -> str:
 
 llm = ChatMistralAI(model="mistral-small-2506")
 
-# Corrected dictionary mapping to match exact function names
-tools = {"get_weather": get_weather, "get_news": get_news}
-llm_with_tools = llm.bind_tools([get_weather, get_news])
+agent = create_agent(
+    llm, tools=[get_weather, get_news], system_prompt="You are helpful city assistance"
+)
 
-messages = []
-
-print("CITY INTELLIGENCE SYSTEM")
-print("Type 'exit' to quit\n")
+print("City Agent | type exit for quite")
 
 while True:
     user_input = input("You: ")
-
     if user_input.lower() == "exit":
+        print("Hava a nice day!")
         break
 
-    messages.append(HumanMessage(content=user_input))
-
-    while True:
-        result = llm_with_tools.invoke(messages)
-        messages.append(result)
-
-        if result.tool_calls:
-            for tool_call in result.tool_calls:
-                tool_name = tool_call["name"]
-                confirm = input(
-                    f"\nAgent wants to call tool '{tool_name}' with args {tool_call['args']}. Approve? (y/n): "
-                )
-
-                if confirm.lower() not in ["y", "yes"]:
-                    tool_result = "User denied permission to run this tool call."
-                else:
-                    tool_result = tools[tool_name].invoke(tool_call)
-
-                # Always send a ToolMessage back to keep conversation state intact
-                messages.append(
-                    ToolMessage(content=tool_result, tool_call_id=tool_call["id"])
-                )
-            continue
-        else:
-            print(f"\nAgent: {result.content}\n")
-            break
+    result = agent.invoke({"messages": [{"role": "user", "content": user_input}]})
+    print(result)
